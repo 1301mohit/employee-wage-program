@@ -18,15 +18,11 @@ function employeeDailyWage() {
 	local fullTimeEmployee=1;
 	local partTimeEmployee=0;
 	local employeeType=$((RANDOM%2));
-	if [ $fullTimeEmployee -eq $employeeType ]
-	then
-		fullDayHour=8;
-	elif [ $employeeType -eq $partTimeEmployee ]
-	then
-		fullDayHour=4;
-	else
-		fullDayHour=0;
-	fi
+	case $employeeType in
+		0) fullDayHour=4;;
+		1) fullDayHour=8;;
+		*) fullDayHour=0;;
+	esac
 	echo "$((fullDayHour*wagePerHour))";
 }
 
