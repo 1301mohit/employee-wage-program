@@ -6,15 +6,28 @@ function employeeAttendance() {
 	local checkRandom=$((RANDOM%2));
 	if [ $checkRandom -eq $present ]
 	then
-		echo "Employee is present";
+		echo "Present";
 	else
-		echo "Employee is absent";
+		echo "Absent";
 	fi
 }
 
-function main() {
+function employeeDailyWage() {
+	local wagePerHour=20;
+	local fullDayHour=0;
 	local checkAttendance="$(employeeAttendance)";
-	echo $checkAttendance;
+	if [ $checkAttendance == "Present" ]
+	then
+		fullDayHour=8;
+	else
+		fullDayHour=0;
+	fi
+	echo "$((fullDayHour*wagePerHour))";
+}
+
+function main() {
+	local dailyWage="$(employeeDailyWage)";
+	echo $dailyWage;
 }
 
 main
