@@ -13,22 +13,26 @@ function employeeAttendance() {
 }
 
 function employeeDailyWage() {
-	local wagePerHour=20;
-	local fullDayHour=0;
-	local fullTimeEmployee=1;
-	local partTimeEmployee=0;
-	local workingDay=20;
-	local totalWage=0;
-	for((day=1; day<=$workingDay; day++))
-	do
-		local employeeType=$((RANDOM%2));
-		case $employeeType in
-			0) fullDayHour=4;;
-			1) fullDayHour=8;;
-			*) fullDayHour=0;;
-		esac
-		totalWage=$((totalWage + fullDayHour * wagePerHour));
-	done
+   local wagePerHour=20;
+   local fullDayHour=0;
+   local fullTimeEmployee=1;
+   local partTimeEmployee=0;
+   local workingDay=20;
+   local totalWage=0;
+   local totalHour=0;
+   local day=1;
+   while [[ $day -le $workingDay && $totalHour -lt 100 ]]
+   do
+      local employeeType=$((RANDOM%2));
+      case $employeeType in
+         0) fullDayHour=4;;
+         1) fullDayHour=8;;
+         *) fullDayHour=0;;
+      esac
+      totalHour=$((totalHour + fullDayHour));
+      totalWage=$((totalWage + fullDayHour * wagePerHour));
+      ((day++));
+   done
 	echo $totalWage;
 }
 
@@ -36,8 +40,8 @@ function main() {
 	local checkAttendance="$(employeeAttendance)";
 	if [ $checkAttendance == "Present" ]
    then
-		local dailyWage="$(employeeDailyWage)";
-		echo $dailyWage;
+		local totalWage="$(employeeDailyWage)";
+		echo $totalWage;
 	fi
 }
 
