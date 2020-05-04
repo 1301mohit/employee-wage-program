@@ -1,5 +1,5 @@
 #!/bin/bash -x
-echo "Welcome to Employee Wage Comuptation Program"
+echo "Welcome to Employee Wage Computation Program"
 
 function employeeAttendance() {
 	local present=1;
@@ -29,19 +29,26 @@ function employeeDailyWage() {
          1) fullDayHour=8;;
          *) fullDayHour=0;;
       esac
+		printf -v int "%d" "$day";
+		printf -v int "%d" "$fullDayHour";
       totalHour=$((totalHour + fullDayHour));
       totalWage=$((totalWage + fullDayHour * wagePerHour));
       ((day++));
    done
-	echo $totalWage;
+	if [[ $totalHour -gt 100 ]]
+	then
+		local extraHour=$((totalHour % 10));
+		totalHour=$((totalHour - extraHour));
+	fi
+	echo $totalHour;
 }
 
 function main() {
 	local checkAttendance="$(employeeAttendance)";
 	if [ $checkAttendance == "Present" ]
    then
-		local totalWage="$(employeeDailyWage)";
-		echo $totalWage;
+		local totalHour="$(employeeDailyWage)";
+		echo $totalHour;
 	fi
 }
 
