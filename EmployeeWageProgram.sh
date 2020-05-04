@@ -17,13 +17,19 @@ function employeeDailyWage() {
 	local fullDayHour=0;
 	local fullTimeEmployee=1;
 	local partTimeEmployee=0;
-	local employeeType=$((RANDOM%2));
-	case $employeeType in
-		0) fullDayHour=4;;
-		1) fullDayHour=8;;
-		*) fullDayHour=0;;
-	esac
-	echo "$((fullDayHour*wagePerHour))";
+	local workingDay=20;
+	local totalWage=0;
+	for((day=1; day<=$workingDay; day++))
+	do
+		local employeeType=$((RANDOM%2));
+		case $employeeType in
+			0) fullDayHour=4;;
+			1) fullDayHour=8;;
+			*) fullDayHour=0;;
+		esac
+		totalWage=$((totalWage + fullDayHour * wagePerHour));
+	done
+	echo $totalWage;
 }
 
 function main() {
