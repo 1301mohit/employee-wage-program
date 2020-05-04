@@ -2,7 +2,7 @@
 echo "Welcome to Employee Wage Computation Program"
 
 #Array
-declare -a dailyWageArray;
+declare -A dailyWageDictionary;
 
 function employeeAttendance() {
 	local present=1;
@@ -24,7 +24,6 @@ function employeeDailyWage() {
    local totalWage=0;
    local totalHour=0;
    local day=1;
-	local countWage=0;
    while [[ $day -le $workingDay && $totalHour -lt 100 ]]
    do
       local employeeType=$((RANDOM%2));
@@ -34,13 +33,13 @@ function employeeDailyWage() {
          *) fullDayHour=0;;
       esac
 		local wage=$((fullDayHour * wagePerHour));
-		dailyWageArray[$countWage]=$wage;
+		dailyWageDictionary[wage$day]=$wage;
 		((countWage++));
       totalHour=$((totalHour + fullDayHour));
       totalWage=$((totalWage + wage));
       ((day++));
    done
-	dailyWageArray[$countWage]=$totalWage;
+	dailyWageDictionary[wage$day]=$totalWage;
 	if [[ $totalHour -gt 100 ]]
 	then
 		local extraHour=$((totalHour % 10));
