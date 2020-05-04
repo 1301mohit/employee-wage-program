@@ -1,6 +1,9 @@
 #!/bin/bash -x
 echo "Welcome to Employee Wage Computation Program"
 
+#Array
+declare -a dailyWageArray;
+
 function employeeAttendance() {
 	local present=1;
 	local checkRandom=$((RANDOM%2));
@@ -21,6 +24,7 @@ function employeeDailyWage() {
    local totalWage=0;
    local totalHour=0;
    local day=1;
+	local countWage=0;
    while [[ $day -le $workingDay && $totalHour -lt 100 ]]
    do
       local employeeType=$((RANDOM%2));
@@ -29,12 +33,14 @@ function employeeDailyWage() {
          1) fullDayHour=8;;
          *) fullDayHour=0;;
       esac
-		printf -v int "%d" "$day";
-		printf -v int "%d" "$fullDayHour";
+		local wage=$((fullDayHour * wagePerHour));
+		dailyWageArray[$countWage]=$wage;
+		((countWage++));
       totalHour=$((totalHour + fullDayHour));
-      totalWage=$((totalWage + fullDayHour * wagePerHour));
+      totalWage=$((totalWage + wage));
       ((day++));
    done
+	dailyWageArray[$countWage]=$totalWage;
 	if [[ $totalHour -gt 100 ]]
 	then
 		local extraHour=$((totalHour % 10));
@@ -53,3 +59,4 @@ function main() {
 }
 
 main
+
